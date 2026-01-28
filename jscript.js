@@ -195,8 +195,13 @@ if (wagerForm) {
 // ------------------ LOAD WAGERS ------------------
 async function loadWagers() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.userId;
   const userEmail = user?.email;
-  if (!userId) return;
+
+  if (!userId) {
+    console.warn("No userId in localStorage");
+    return;
+  }
 
   try {
     const res = await fetch(`${BACKEND_URL}/wagers/${userId}`);
@@ -210,16 +215,10 @@ async function loadWagers() {
     const table = document.getElementById("wagerTable");
     if (!table) return;
 
-    // Clear previous rows but keep the header
-    const rows = table.querySelectorAll('tr:not(:first-child)');
-    rows.forEach(row => row.remove());
+    // Clear old rows
+    table.querySelectorAll("tr:not(:first-child)").forEach(r => r.remove());
 
-    // Add wager rows with description field included
     data.forEach(wager => {
-      const row = document.createElement("tr");
-      const user = JSON.parse(localStorage.getItem("user"));
-      const userEmail = user?.email;
-
       let status = "Creator";
 
       if (wager.wager_members?.length) {
@@ -227,6 +226,7 @@ async function loadWagers() {
         if (member) status = member.status || "Pending";
       }
 
+      const row = document.createElement("tr");
       row.innerHTML = `
         <td>${wager.group_name}</td>
         <td>${wager.description}</td>
@@ -344,8 +344,8 @@ edateexpand.addEventListener('dblclick', () => {
 });
 // ------------------ LOAD WAGER REQUESTS ------------------
 async function loadWagerRequests() {
-  const params = new URLSearchParams(window.location.search);
-  const userEmail = params.get("email");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user?.email;
   if (!userEmail) return;
 
   try {
@@ -395,8 +395,8 @@ if (document.getElementById("requests")) {
 }
 // Accept wager
 async function acceptWager(wagerId) {
-  const params = new URLSearchParams(window.location.search);
-  const userEmail = params.get("email");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user?.email;
 
   if (!userEmail) {
     alert("User email not found");
@@ -427,8 +427,8 @@ async function acceptWager(wagerId) {
 
 // Decline wager
 async function declineWager(wagerId) {
-  const params = new URLSearchParams(window.location.search);
-  const userEmail = params.get("email");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user?.email;
 
   if (!userEmail) {
     alert("User email not found");
