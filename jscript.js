@@ -302,24 +302,24 @@ const payoutexpand = document.getElementById("payoutexpand")
 const sdateexpand = document.getElementById("sdateexpand")
 const edateexpand = document.getElementById("edateexpand")
 
-nameexpand.addEventListener('click', ( )=> {
+nameexpand.addEventListener('dblclick', ( )=> {
     nameexpand.classList.toggle('collapse');
 });
-memberexpand.addEventListener('click', ( )=> {
+memberexpand.addEventListener('dblclick', ( )=> {
     memberexpand.classList.toggle('collapse');
 });
-descriptionexpand.addEventListener('click', ( )=> {
+descriptionexpand.addEventListener('dblclick', ( )=> {
     descriptionexpand.classList.toggle('collapse');
 });
-amountexpand.addEventListener('click', ( )=> {
+amountexpand.addEventListener('dblclick', ( )=> {
     amountexpand.classList.toggle('collapse');
 });
-payoutexpand.addEventListener('click', ( )=> {
+payoutexpand.addEventListener('dblclick', ( )=> {
     payoutexpand.classList.toggle('collapse');
 });
-sdateexpand.addEventListener('click', ( )=> {
+sdateexpand.addEventListener('dblclick', ( )=> {
     sdateexpand.classList.toggle('collapse');
 });
-edateexpand.addEventListener('click', () => {
+edateexpand.addEventListener('dblclick', () => {
   edateexpand.classList.toggle('collapse')
 });
