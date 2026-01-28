@@ -37,11 +37,13 @@
             </div>
         </div>
         <script>
-            const params = new URLSearchParams(window.location.search);
-            const userName = params.get('name');
-            const userEmail = params.get('email');
-            document.getElementById('user-name').innerText = userName || 'User';
-            document.getElementById('user-email').innerText = userEmail || 'Not available';
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user) {
+            window.location.href = "login.html"; // optional safety
+        } else {
+            document.getElementById("user-name").innerText = user.name;
+            document.getElementById("user-email").innerText = user.email;
+        }
         </script>
         <script src="jscript.js"></script>
 </body>

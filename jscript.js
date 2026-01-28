@@ -35,8 +35,12 @@ if (signupForm) {
       const data = await res.json();
 
       if (data.userId) {
-        // Redirect with userId, email, AND name
-        window.location.href = `home.html?userId=${encodeURIComponent(data.userId)}&email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
+      localStorage.setItem("user", JSON.stringify({
+        userId: data.userId,
+        name,
+        email
+      }));
+      window.location.href = "home.html";
       } else {
         error_message.innerText = data.message || "Signup failed";
       }
@@ -70,8 +74,13 @@ if (loginForm) {
       const data = await res.json();
 
       if (data.success && data.userId) {
-        // Redirect with userId, email, AND name
-        window.location.href = `home.html?userId=${encodeURIComponent(data.userId)}&email=${encodeURIComponent(data.email)}&name=${encodeURIComponent(data.name)}`;
+      localStorage.setItem("user", JSON.stringify({
+        userId: data.userId,
+        name: data.name,
+        email: data.email
+      }));
+
+      window.location.href = "home.html";
       } else {
         error_message.innerText = data.message || "Invalid email or password";
       }
@@ -111,9 +120,8 @@ allInputs.forEach(input => {
 
 // ------------------ FORM NAVIGATION ------------------
 function goToForm() {
-  const params = new URLSearchParams(window.location.search);
-  const userId = params.get("userId");
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?.userId;
   if (!userId) {
     alert("User not logged in");
     return;
@@ -145,8 +153,8 @@ if (wagerForm) {
     }
     const members = validation.emails;
 
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get("userId");
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userId = user?.userId;
     if (!userId) {
       alert("User not logged in");
       return;
@@ -173,7 +181,7 @@ if (wagerForm) {
       const data = await res.json();
 
       if (data.success) {
-        window.location.href = `home.html?userId=${userId}`;
+        window.location.href = `home.html`;
       } else {
         alert(data.message || "Failed to create wager");
       }
@@ -186,8 +194,8 @@ if (wagerForm) {
 
 // ------------------ LOAD WAGERS ------------------
 async function loadWagers() {
-  const params = new URLSearchParams(window.location.search);
-  const userId = params.get("userId");
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userEmail = user?.email;
   if (!userId) return;
 
   try {
@@ -209,8 +217,8 @@ async function loadWagers() {
     // Add wager rows with description field included
     data.forEach(wager => {
       const row = document.createElement("tr");
-      const params = new URLSearchParams(window.location.search);
-      const userEmail = params.get("email");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userEmail = user?.email;
 
       let status = "Creator";
 
