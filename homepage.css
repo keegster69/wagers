@@ -1,0 +1,85 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Verdana, Tahoma, sans-serif;
+}
+body {
+    background: linear-gradient(135deg, #484e65, #485b80);
+    min-height: 100vh;
+    font-family: "Lalezar", sans-serif;
+    display:flex;
+    padding: 20px;
+    color: black;
+    flex-direction:column;
+    margin-bottom:400px
+}
+.account {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    font-size:1.5rem;
+}
+.hero {
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.mywagers {
+    margin-top:100px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align:center;
+    margin-bottom: 35px;
+    padding:24px;
+    background: linear-gradient(135deg, #afbecf, #9cb2c6);
+    border-radius: 1rem;
+    width:fit-content;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.wagers {
+    margin-bottom: 35px;
+    padding:24px;
+    background: linear-gradient(135deg, #aec6dd, #89a9bc);
+    border-radius: 1rem;
+    width:fit-content;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+button {
+    margin-top:20px;
+    background-color: #ffffff;
+    border:none;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+button:hover {
+    transform: translateY(-2px);
+}
+.hero h1{
+    text-align: center;
+    color: #1a202c;
+    margin-bottom: 35px;
+    font-size: 4rem;
+    font-weight:600;
+    letter-spacing: -0.5px;
+}
+.table {
+  border-collapse: collapse;   /* single borders */
+  background-color: white;
+  width: 100%;
+}
+
+.table th,
+.table td {
+  border: 3px solid black;
+  padding: 10px 30px;
+  text-align: left;
+}
+
+.table th {
+  font-weight: bold;
+}

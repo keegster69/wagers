@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Create Wager</title>
+    <link rel="stylesheet" href="display.css" />
+</head>
+<body class="wrap">
+    <img src="guinness.png" width="400px" class="guinness">
+    <div class="body">
+    <div class="content">
+        <h1><b>Create a Wager</b></h1>
+        <form id="wagerForm">
+            <div class="nameexpand" id="nameexpand">
+            <h2>Group Name</h2>
+            <input type="text" id="groupName" placeholder="Enter Group Name" required />
+            </div>
+            <div class="memberexpand" id="addmemberform">
+                <h2>Group Members</h2>
+                <div id="membersContainer">
+                    <input type="email" class="member-email" placeholder="Enter member email" required />
+                </div>
+                <button type="button" class="addMemberBtn"id="addMemberBtn">Add Member</button>
+            </div>
+            <div class="descriptionexpand" id="descriptionexpand">
+            <h2>Description</h2>
+            <input type="text" id="description" placeholder="Enter Description" required />
+            </div>
+            <div class="amountexpand" id="amountexpand">
+                <h2>Amount</h2>
+                <input type="text" id="amount" placeholder="Enter Amount" required />
+            </div>
+            <div class="payoutexpand" id ="payoutexpand">
+                <h2>Payout</h2>
+                <input type="text" id="payout" placeholder="Enter Payout Info" required />
+            </div>
+            <div class="sdateexpand" id="sdateexpand">
+                <h2>Start Date</h2>
+                <input type="date" id="startDate" required />
+            </div>
+            <div class="edateexpand" id ="edateexpand">
+                <h2>End Date</h2>
+                <input type="date" id="endDate" required />
+            </div>
+            <br /><br />
+            <button type="submit" class="submitbtn"><b>Confirm Wager</b></button>
+        </form>
+        <script src="jscript.js"></script>
+    </div>
+    </div>
+    <img src="fireworks.png" width = 400px class="fireworks">
+</body>
+</html>
