@@ -83,3 +83,58 @@ button:hover {
 .table th {
   font-weight: bold;
 }
+.request-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.request-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.request-card p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.request-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.request-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.request-actions button:first-child {
+  background: #4CAF50;
+  color: white;
+}
+
+.request-actions button:last-child {
+  background: #f44336;
+  color: white;
+}
+.status {
+  font-weight: bold;
+}
+
+.status.pending {
+  color: orange;
+}
+
+.status.accepted {
+  color: green;
+}
+
+.status.creator {
+  color: #555;
+}

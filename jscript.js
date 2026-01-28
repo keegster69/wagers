@@ -209,6 +209,16 @@ async function loadWagers() {
     // Add wager rows with description field included
     data.forEach(wager => {
       const row = document.createElement("tr");
+      const params = new URLSearchParams(window.location.search);
+      const userEmail = params.get("email");
+
+      let status = "Creator";
+
+      if (wager.wager_members?.length) {
+        const member = wager.wager_members.find(m => m.email === userEmail);
+        if (member) status = member.status || "Pending";
+      }
+
       row.innerHTML = `
         <td>${wager.group_name}</td>
         <td>${wager.description}</td>
@@ -216,6 +226,7 @@ async function loadWagers() {
         <td>${wager.start_date}</td>
         <td>${wager.end_date}</td>
         <td>${wager.payout}</td>
+        <td class="status ${status.toLowerCase()}">${status}</td>
       `;
       table.appendChild(row);
     });
@@ -371,18 +382,6 @@ async function loadWagerRequests() {
   }
 }
 
-// Accept/Decline functions (you can implement these later)
-function acceptWager(wagerId) {
-  alert(`Accepted wager ${wagerId}`);
-  // TODO: Add backend logic to mark as accepted
-}
-
-function declineWager(wagerId) {
-  alert(`Declined wager ${wagerId}`);
-  // TODO: Add backend logic to remove member or mark as declined
-}
-
-// Load wager requests on home page
 if (document.getElementById("requests")) {
   loadWagerRequests();
 }
@@ -407,7 +406,8 @@ async function acceptWager(wagerId) {
 
     if (data.success) {
       alert("Wager accepted!");
-      loadWagerRequests(); // Reload the requests list
+      loadWagerRequests();
+      loadWagers();
     } else {
       alert(data.message || "Failed to accept wager");
     }
