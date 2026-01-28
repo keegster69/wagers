@@ -323,3 +323,131 @@ sdateexpand.addEventListener('dblclick', ( )=> {
 edateexpand.addEventListener('dblclick', () => {
   edateexpand.classList.toggle('collapse')
 });
+// ------------------ LOAD WAGER REQUESTS ------------------
+async function loadWagerRequests() {
+  const params = new URLSearchParams(window.location.search);
+  const userEmail = params.get("email");
+  if (!userEmail) return;
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/wager-requests/${encodeURIComponent(userEmail)}`);
+    const data = await res.json();
+
+    if (!Array.isArray(data)) {
+      console.error("Invalid wager requests data:", data);
+      return;
+    }
+
+    const requestsContainer = document.getElementById("requests");
+    if (!requestsContainer) return;
+
+    requestsContainer.innerHTML = ""; // Clear previous content
+
+    if (data.length === 0) {
+      requestsContainer.innerHTML = "<p>No wager requests yet.</p>";
+      return;
+    }
+
+    // Display each wager request
+    data.forEach(wager => {
+      const requestCard = document.createElement("div");
+      requestCard.className = "request-card";
+      requestCard.innerHTML = `
+        <h3>${wager.group_name}</h3>
+        <p>${wager.description}</p>
+        <p><strong>Amount:</strong> ${wager.amount}</p>
+        <p><strong>Dates:</strong> ${wager.start_date} to ${wager.end_date}</p>
+        <p><strong>Payout:</strong> ${wager.payout}</p>
+        <div class="request-actions">
+          <button onclick="acceptWager('${wager.id}')">Accept</button>
+          <button onclick="declineWager('${wager.id}')">Decline</button>
+        </div>
+      `;
+      requestsContainer.appendChild(requestCard);
+    });
+
+  } catch (err) {
+    console.error("Failed to load wager requests:", err);
+  }
+}
+
+// Accept/Decline functions (you can implement these later)
+function acceptWager(wagerId) {
+  alert(`Accepted wager ${wagerId}`);
+  // TODO: Add backend logic to mark as accepted
+}
+
+function declineWager(wagerId) {
+  alert(`Declined wager ${wagerId}`);
+  // TODO: Add backend logic to remove member or mark as declined
+}
+
+// Load wager requests on home page
+if (document.getElementById("requests")) {
+  loadWagerRequests();
+}
+// Accept wager
+async function acceptWager(wagerId) {
+  const params = new URLSearchParams(window.location.search);
+  const userEmail = params.get("email");
+
+  if (!userEmail) {
+    alert("User email not found");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/wagers/${wagerId}/accept`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userEmail })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Wager accepted!");
+      loadWagerRequests(); // Reload the requests list
+    } else {
+      alert(data.message || "Failed to accept wager");
+    }
+  } catch (err) {
+    console.error("Error accepting wager:", err);
+    alert("Server error accepting wager");
+  }
+}
+
+// Decline wager
+async function declineWager(wagerId) {
+  const params = new URLSearchParams(window.location.search);
+  const userEmail = params.get("email");
+
+  if (!userEmail) {
+    alert("User email not found");
+    return;
+  }
+
+  if (!confirm("Are you sure you want to decline this wager?")) {
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/wagers/${wagerId}/decline`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userEmail })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Wager declined");
+      loadWagerRequests(); // Reload the requests list
+    } else {
+      alert(data.message || "Failed to decline wager");
+    }
+  } catch (err) {
+    console.error("Error declining wager:", err);
+    alert("Server error declining wager");
+  }
+}
